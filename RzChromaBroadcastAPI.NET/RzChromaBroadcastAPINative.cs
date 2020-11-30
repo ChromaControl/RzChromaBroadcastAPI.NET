@@ -12,7 +12,7 @@ namespace Razer.Chroma.Broadcast
 	/// </summary>
 	internal interface IRzChromaBroadcastAPINative
 	{
-		RzResult Init(uint a, uint b, uint c, uint d);
+		RzResult Init(Guid guid);
 
 		RzResult UnInit();
 		RzResult RegisterEventNotification(RzChromaBroadcastAPINative.RegisterEventNotificationCallback callback);
@@ -24,7 +24,7 @@ namespace Razer.Chroma.Broadcast
 	/// </summary>
 	internal class RzChromaBroadcastAPINative32 : IRzChromaBroadcastAPINative
 	{
-		RzResult IRzChromaBroadcastAPINative.Init(uint a, uint b, uint c, uint d) => Init(a, b, c, d);
+		RzResult IRzChromaBroadcastAPINative.Init(Guid guid) => Init(guid);
 
 		RzResult IRzChromaBroadcastAPINative.RegisterEventNotification(RzChromaBroadcastAPINative.RegisterEventNotificationCallback callback) => RegisterEventNotification(callback);
 
@@ -34,7 +34,7 @@ namespace Razer.Chroma.Broadcast
 
 
 		[DllImport("RzChromaBroadcastAPI.dll", CallingConvention = CallingConvention.Cdecl)]
-		public static extern RzResult Init(uint a, uint b, uint c, uint d); // TODO: If we decide to pass the GUID directly this should just take in (Guid guid)
+		public static extern RzResult Init(Guid guid);
 
 		[DllImport("RzChromaBroadcastAPI.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern RzResult UnInit();
@@ -51,7 +51,7 @@ namespace Razer.Chroma.Broadcast
 	/// </summary>
 	internal class RzChromaBroadcastAPINative64 : IRzChromaBroadcastAPINative
 	{
-		RzResult IRzChromaBroadcastAPINative.Init(uint a, uint b, uint c, uint d) => Init(new uint[] { a, b, c, d });
+		RzResult IRzChromaBroadcastAPINative.Init(Guid guid) => Init(guid);
 
 		RzResult IRzChromaBroadcastAPINative.RegisterEventNotification(RzChromaBroadcastAPINative.RegisterEventNotificationCallback callback) => RegisterEventNotification(callback);
 
@@ -62,7 +62,7 @@ namespace Razer.Chroma.Broadcast
 		// No need to specify native calling conventions on x86_64 as it is always fastcall even if otherwise specified
 
 		[DllImport("RzChromaBroadcastAPI64.dll")]
-		public static extern RzResult Init(uint[] guid); // 64-bit version expects a Guid* not a Guid // TODO: If we decide to pass the GUID directly this should just take in (in Guid guid)
+		public static extern RzResult Init(in Guid guid); // 64-bit version expects a Guid* not a Guid 
 
 		[DllImport("RzChromaBroadcastAPI64.dll")]
 		public static extern RzResult UnInit();
@@ -86,7 +86,7 @@ namespace Razer.Chroma.Broadcast
 
 		// Pass all calls to the appropriate Native class for this architecture.
 
-		public static RzResult Init(uint a, uint b, uint c, uint d) => _native.Init(a, b, c, d);
+		public static RzResult Init(Guid guid) => _native.Init(guid);
 		public static RzResult UnInit() => _native.UnInit();
 		public static RzResult RegisterEventNotification(RegisterEventNotificationCallback callback) => _native.RegisterEventNotification(callback);
 		public static RzResult UnRegisterEventNotification() => _native.UnRegisterEventNotification();
