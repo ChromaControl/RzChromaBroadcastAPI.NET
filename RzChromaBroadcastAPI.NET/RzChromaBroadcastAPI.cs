@@ -23,16 +23,21 @@ namespace Razer.Chroma.Broadcast
             var b = (uint)((i >> 64) & 0xFFFFFFFF);
             var c = (uint)((i >> 32) & 0xFFFFFFFF);
             var d = (uint)((i >> 0) & 0xFFFFFFFF);
-
-            var initResult = RzChromaBroadcastAPINative.Init(a, b, c, d);
-
-            if (initResult == RzResult.SUCCESS)
+            try
             {
-                notificationCallback = new RzChromaBroadcastAPINative.RegisterEventNotificationCallback(EventNotificationCallback);
-                initResult = RzChromaBroadcastAPINative.RegisterEventNotification(notificationCallback);
-            }
+                var initResult = RzChromaBroadcastAPINative.Init(a, b, c, d);
 
-            return initResult;
+                if (initResult == RzResult.SUCCESS)
+                {
+                    notificationCallback = new RzChromaBroadcastAPINative.RegisterEventNotificationCallback(EventNotificationCallback);
+                    initResult = RzChromaBroadcastAPINative.RegisterEventNotification(notificationCallback);
+                }
+
+                return initResult;
+            } catch (SEHException e)
+			{
+                return RzResult.FAILED;
+            }
         }
 
         public RzResult UnInit()
