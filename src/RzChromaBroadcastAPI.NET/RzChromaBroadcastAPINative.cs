@@ -13,7 +13,6 @@ namespace Razer.Chroma.Broadcast
 	internal interface IRzChromaBroadcastAPINative
 	{
 		RzResult Init(Guid guid);
-
 		RzResult UnInit();
 		RzResult RegisterEventNotification(RzChromaBroadcastAPINative.RegisterEventNotificationCallback callback);
 		RzResult UnRegisterEventNotification();
@@ -31,7 +30,6 @@ namespace Razer.Chroma.Broadcast
 		RzResult IRzChromaBroadcastAPINative.UnInit() => UnInit();
 
 		RzResult IRzChromaBroadcastAPINative.UnRegisterEventNotification() => UnRegisterEventNotification();
-
 
 		[DllImport("RzChromaBroadcastAPI.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern RzResult Init(Guid guid);
@@ -60,7 +58,6 @@ namespace Razer.Chroma.Broadcast
 		RzResult IRzChromaBroadcastAPINative.UnRegisterEventNotification() => UnRegisterEventNotification();
 
 		// No need to specify native calling conventions on x86_64 as it is always fastcall even if otherwise specified
-
 		[DllImport("RzChromaBroadcastAPI64.dll")]
 		public static extern RzResult Init(in Guid guid); // 64-bit version expects a Guid* not a Guid 
 
@@ -73,6 +70,7 @@ namespace Razer.Chroma.Broadcast
 		[DllImport("RzChromaBroadcastAPI64.dll")]
 		public static extern RzResult UnRegisterEventNotification();
 	}
+	
 	#endregion
 
 	internal class RzChromaBroadcastAPINative
@@ -85,7 +83,6 @@ namespace Razer.Chroma.Broadcast
 		private static readonly IRzChromaBroadcastAPINative _native = IntPtr.Size == 8 ? (IRzChromaBroadcastAPINative)new RzChromaBroadcastAPINative64() : new RzChromaBroadcastAPINative32();
 
 		// Pass all calls to the appropriate Native class for this architecture.
-
 		public static RzResult Init(Guid guid) => _native.Init(guid);
 		public static RzResult UnInit() => _native.UnInit();
 		public static RzResult RegisterEventNotification(RegisterEventNotificationCallback callback) => _native.RegisterEventNotification(callback);
