@@ -8,14 +8,17 @@
     <Product>Chroma</Product>
     <Description>Wrapper for native RzChromaBroadcastAPI</Description>
     <Copyright>Razer Inc.</Copyright>
-    <PackageProjectUrl>https://github.com/AndrewBabbitt97/RzChromaBroadcastAPI.NET</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/AndrewBabbitt97/RzChromaBroadcastAPI.NET/master/nuget.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/AndrewBabbitt97/RzChromaBroadcastAPI.NET</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ChromaControl/RzChromaBroadcastAPI.NET</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://github.com/ChromaControl/RzChromaBroadcastAPI.NET</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Razer;Chroma;API;RzChromaBroadcastAPI;Broadcast</PackageTags>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed GUID segment ordering
+64 bit support</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <Version>1.1.0</Version>
+    <PackageIcon>nuget.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,6 +27,10 @@
 
   <ItemGroup>
     <None Include="..\..\License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\nuget.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
