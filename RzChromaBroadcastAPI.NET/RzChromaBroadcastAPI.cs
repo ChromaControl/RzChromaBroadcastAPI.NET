@@ -17,15 +17,9 @@ namespace Razer.Chroma.Broadcast
 
         public RzResult Init(Guid guid)
         {
-            var i = new BigInteger(guid.ToByteArray());
-
-            var a = (uint)((i >> 96) & 0xFFFFFFFF);
-            var b = (uint)((i >> 64) & 0xFFFFFFFF);
-            var c = (uint)((i >> 32) & 0xFFFFFFFF);
-            var d = (uint)((i >> 0) & 0xFFFFFFFF);
             try
             {
-                var initResult = RzChromaBroadcastAPINative.Init(a, b, c, d);
+                var initResult = RzChromaBroadcastAPINative.Init(guid);
 
                 if (initResult == RzResult.SUCCESS)
                 {
@@ -34,7 +28,7 @@ namespace Razer.Chroma.Broadcast
                 }
 
                 return initResult;
-            } catch (SEHException e)
+            } catch (SEHException)
 			{
                 return RzResult.FAILED;
             }
